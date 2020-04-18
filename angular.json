@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -92,9 +93,12 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/p5/lib/p5.min.js"
+            ]
           }
         },
         "lint": {
@@ -123,6 +127,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "meme-generator"
 }
