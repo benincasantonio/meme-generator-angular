@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import * as p5 from 'p5';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-generate-meme',
@@ -28,6 +28,7 @@ export class GenerateMemeComponent implements AfterViewInit, OnChanges {
     this.form = this.fb.group({
       topText: [],
       bottomText: [],
+      fontSize: [30, Validators.required]
     });
   }
 
@@ -36,7 +37,7 @@ export class GenerateMemeComponent implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.imageUrl.currentValue && !changes.imageUrl.firstChange) {
+    if (changes.imageUrl.currentValue && !changes.imageUrl.firstChange) {
       this.p5Sketch.remove();
       this.form.reset();
       this.initCanvas();
@@ -55,24 +56,22 @@ export class GenerateMemeComponent implements AfterViewInit, OnChanges {
         p.createCanvas(600, 400);
         p.loadImage(imageUrl, (img) => {
           p.image(img, 0, 0, 600, 400);
-          p.textSize(20);
-          p.textStyle('bold');
 
           const values = this.form.getRawValue();
           const impactFont = p.loadFont('/assets/fonts/impact.ttf');
+          p.textSize(Number(this.form.get('fontSize').value));
           p.fill(255, 255, 255, 255);
+          p.textStyle('bold');
           p.textFont(impactFont);
-          p.textSize(30);
           p.stroke(0);
           p.strokeWeight(5);
-          p.textStyle('bold');
 
           if (values.topText) {
             p.textAlign('center', 'top');
             p.text(values.topText, p.width / 2, 15);
           }
 
-          if(values.bottomText) {
+          if (values.bottomText) {
             p.textAlign('center', 'bottom');
             p.text(values.bottomText, p.width / 2, p.height - 15);
           }
@@ -82,6 +81,8 @@ export class GenerateMemeComponent implements AfterViewInit, OnChanges {
   }
 
   downloadMeme() {
-    this.p5Sketch.save('meme');
+    if (this.form.valid) {
+      this.p5Sketch.save('meme');
+    }
   }
 }

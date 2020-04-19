@@ -7,7 +7,10 @@
   <mat-form-field>
     <textarea matInput formControlName="bottomText" placeholder="Bottom Text"></textarea>
   </mat-form-field>
+  <mat-form-field>
+    <input matInput type="number" formControlName="fontSize" placeholder="Font Size">
+  </mat-form-field>
 
   <button mat-button type="submit" color="primary">Generate Meme</button>
-  <button mat-button type="submit" color="primary" (click)="downloadMeme()">Download</button>
+  <button mat-button type="button" color="primary" (click)="downloadMeme()">Download</button>
 </form>
